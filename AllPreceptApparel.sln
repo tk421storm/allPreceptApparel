@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllPreceptApparel", "AllPreceptApparel.csproj", "{CF5A821D-8B44-476E-8107-9AE00E540B39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		1.4|Any CPU = 1.4|Any CPU
+		1.5|Any CPU = 1.5|Any CPU
+		1.6|Any CPU = 1.6|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF5A821D-8B44-476E-8107-9AE00E540B39}.1.4|Any CPU.ActiveCfg = 1.4|Any CPU
+		{CF5A821D-8B44-476E-8107-9AE00E540B39}.1.4|Any CPU.Build.0 = 1.4|Any CPU
+		{CF5A821D-8B44-476E-8107-9AE00E540B39}.1.5|Any CPU.ActiveCfg = 1.5|Any CPU
+		{CF5A821D-8B44-476E-8107-9AE00E540B39}.1.5|Any CPU.Build.0 = 1.5|Any CPU
+		{CF5A821D-8B44-476E-8107-9AE00E540B39}.1.6|Any CPU.ActiveCfg = 1.6|Any CPU
+		{CF5A821D-8B44-476E-8107-9AE00E540B39}.1.6|Any CPU.Build.0 = 1.6|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6FBF0E85-5C0F-40DD-8975-3BFC89544847}
+	EndGlobalSection
+EndGlobal
