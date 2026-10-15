@@ -59,7 +59,7 @@ namespace TKS_AllPreceptApparel
                     //skip armor, utility items
                     if (thingDef.thingCategories != null && (thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelUtility) || thingDef.thingCategories.Contains(ThingCategoryDefOf.ArmorHeadgear)
                         || thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor)))
-#elif v1_5
+#else
                     //skip armor, utility items
                     if (thingDef.thingCategories != null && (thingDef.thingCategories.Contains(ThingCategoryDefOf.ArmorHeadgear) || thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor)))
 #endif
