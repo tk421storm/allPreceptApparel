@@ -1,0 +1,19 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllPreceptApparel.1.7", "AllPreceptApparel.1.7.csproj", "{9F7DC939-ACF0-4EDB-BF38-60B964D4428C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		1.7|Any CPU = 1.7|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F7DC939-ACF0-4EDB-BF38-60B964D4428C}.1.7|Any CPU.ActiveCfg = 1.7|Any CPU
+		{9F7DC939-ACF0-4EDB-BF38-60B964D4428C}.1.7|Any CPU.Build.0 = 1.7|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
