@@ -129,6 +129,10 @@ namespace TKS_AllPreceptApparel
                 apparelRequirement.requiredTags = requirement.allowedFactionCategoryTags;
                 apparelRequirement.allowedTags = requirement.allowedFactionCategoryTags;
 
+                //vanilla labels a requirement with no group label by the first matching apparel a male could wear - there is none for
+                //female-only apparel, which threw. our requirements are a single item, so its label is the same text vanilla would show
+                apparelRequirement.groupLabel = thingDef.LabelCap;
+
                 requirement.requirement = apparelRequirement;
 
                 temp.Add(requirement);
@@ -136,6 +140,25 @@ namespace TKS_AllPreceptApparel
 
             __result = temp;
             return false;
+        }
+
+        //roles save their requirements, so ones made before the group label was set (above) still throw in existing saves -
+        //give any single-item requirement without a label the item's label. once set it's saved, so this only does work once per requirement
+        [HarmonyPatch(typeof(Precept_Role), "AllApparelRequirementLabels")]
+        [HarmonyPrefix]
+        public static void AllApparelRequirementLabels_Prefix(Precept_Role __instance)
+        {
+            if (__instance.apparelRequirements == null) { return; }
+
+            foreach (PreceptApparelRequirement preceptRequirement in __instance.apparelRequirements)
+            {
+                ApparelRequirement requirement = preceptRequirement?.requirement;
+                //single item and no tags is how ours are made - vanilla's tag-based requirements are left alone
+                if (requirement != null && requirement.groupLabel.NullOrEmpty() && requirement.requiredTags.NullOrEmpty() && requirement.requiredDefs != null && requirement.requiredDefs.Count == 1 && requirement.requiredDefs[0] != null)
+                {
+                    requirement.groupLabel = requirement.requiredDefs[0].LabelCap;
+                }
+            }
         }
     }
 }
