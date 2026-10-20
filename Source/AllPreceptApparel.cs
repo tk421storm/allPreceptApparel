@@ -53,26 +53,7 @@ namespace TKS_AllPreceptApparel
             {
                 if (thingDef != null && thingDef.IsApparel) {
 
-#if v1_4
-                    //skip armor, utility items
-                    if (thingDef.thingCategories != null && (thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelUtility) || thingDef.thingCategories.Contains(ThingCategoryDefOf.ArmorHeadgear)
-                        || thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor)))
-#else
-                    //skip armor, utility items
-                    if (thingDef.thingCategories != null && (thingDef.thingCategories.Contains(ThingCategoryDefOf.ArmorHeadgear) || thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor)))
-#endif
-                    {
-                        continue;
-                    }
-                    
-                    //skip slave stuff, mechanator stuff
-                    if (thingDef.label.ToLower().Contains("slave") || thingDef.apparel.mechanitorApparel)
-                    {
-                        continue;
-                    }
-
-                    //skip kids clothes
-                    if (!thingDef.apparel.developmentalStageFilter.Adult())
+                    if (NeverSelect(thingDef))
                     {
                         continue;
                     }
@@ -93,6 +74,68 @@ namespace TKS_AllPreceptApparel
 
             result.Sort((x, y) => x.label.CompareTo(y.label));
             return result;
+        }
+
+        //single-use items that happen to be apparel - a role can't be expected to keep one on
+        private static readonly HashSet<string> neverSelectDefNames = new HashSet<string>
+        {
+            "OrbitalTargeterBombardment",
+            "OrbitalTargeterPowerBeam",
+            "OrbitalTargeterMechCluster",
+        };
+
+        //apparel that should never be offered as role apparel - either it's out of place on a role, or a colonist could never
+        //satisfy it (vanilla wouldn't count it as worn, so the role holder would carry the unmet apparel mood penalty for good)
+        private static bool NeverSelect(ThingDef thingDef)
+        {
+#if v1_4
+            //skip armor, utility items
+            if (thingDef.thingCategories != null && (thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelUtility) || thingDef.thingCategories.Contains(ThingCategoryDefOf.ArmorHeadgear)
+                || thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor)))
+#else
+            //skip armor, utility items
+            if (thingDef.thingCategories != null && (thingDef.thingCategories.Contains(ThingCategoryDefOf.ArmorHeadgear) || thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor)))
+#endif
+            {
+                return true;
+            }
+
+            //skip slave stuff, mechanator stuff
+            if (thingDef.label.ToLower().Contains("slave") || thingDef.apparel.mechanitorApparel)
+            {
+                return true;
+            }
+
+            //skip kids clothes
+            if (!thingDef.apparel.developmentalStageFilter.Adult())
+            {
+                return true;
+            }
+
+            //the def itself says it's not for ideoligions (vanilla's own flag, ie apparel modders keep out of ideo choices)
+            if (!thingDef.apparel.canBeDesiredForIdeo)
+            {
+                return true;
+            }
+
+            //vanilla ignores apparel without a tags list when checking role apparel, so it could never count as worn
+            if (thingDef.apparel.tags == null)
+            {
+                return true;
+            }
+
+            //animal gear (Animal Gear framework and similar mods tag it "Animal") - it uses human body part groups, so nothing else gives it away
+            if (thingDef.apparel.tags.Contains("Animal"))
+            {
+                return true;
+            }
+
+            if (neverSelectDefNames.Contains(thingDef.defName))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         [HarmonyPatch(typeof(Precept_Role), "AllPossibleRequirements")]
